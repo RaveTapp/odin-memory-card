@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+}
+
+#root, .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    border: 10px solid black;
+    width: 16vw;
+    
+}
+
+.card img {
+    width: 12vw;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(6, 16vw);
+    grid-template-rows: 30vh 30vh;
+    gap: 12px;
+}

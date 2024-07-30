@@ -39,7 +39,7 @@ export function CardContainer() {
     );
   }
 
-  return <>{cards}</>;
+  return <div className="container">{cards}</div>;
 }
 
 function Card({gif, name}) {
