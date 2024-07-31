@@ -1,5 +1,21 @@
+:root {
+    --background-color: #222831;
+    --snd-backgroun-color: #393e46;
+    --main-color: #ff5722;
+    --text-color: #eeeeee;
+}
+
 * {
     box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+p, h1, h2{
+    color: var(--text-color);
 }
 
 #root, .card {
@@ -10,9 +26,10 @@
 }
 
 .card {
-    border: 10px solid black;
-    width: 16vw;
-    
+    border: 10px solid var(--main-color);
+    width: 15vw;
+    background-color: var(--snd-backgroun-color);
+    border-radius: 20px;
 }
 
 .card img {
@@ -21,7 +38,7 @@
 
 .container {
     display: grid;
-    grid-template-columns: repeat(6, 16vw);
+    grid-template-columns: repeat(6, 15vw);
     grid-template-rows: 30vh 30vh;
     gap: 12px;
 }
