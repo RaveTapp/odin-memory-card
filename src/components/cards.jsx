@@ -1,5 +1,5 @@
 import shuffle from "array-permutation/lib/shuffle";
-import {useState} from "react";
+import { useState } from "react";
 
 import cat from "../gifs/cat.gif";
 import dinosaur from "../gifs/dinosaur.gif";
@@ -33,29 +33,59 @@ const animalGifs = [
 
 export function CardContainer() {
   const [data, setData] = useState(animalGifs);
+  const [score, setScore] = useState({ currScore: 0, highscore: 0 });
   let newData = data;
-  
+
   shuffle(newData);
+
   const cards = [];
   for (let i = 0; i < newData.length; i++) {
     cards.push(
-      <Card key={i} gif={newData[i].gif} name={newData[i].name} data={newData} setData={setData} />
+      <Card
+        key={i}
+        gif={newData[i].gif}
+        name={newData[i].name}
+        data={newData}
+        setData={setData}
+        score={score}
+        setScore={setScore}
+      />
     );
   }
 
-  return <div className="container">{cards}</div>;
+  return (
+    <>
+      <div className="container">{cards}</div>
+      <p>Score: <span className="score">{score.currScore}</span></p>
+      <p>Highscore: <span className="highscore">{score.highscore} </span></p>
+    </>
+  );
 }
 
-function Card({gif, name, data, setData}) {
-  function handleClick(){
-    data.map((obj) => { if (obj.name === name) obj.clicked = true});
+function Card({ gif, name, data, setData, score, setScore }) {
+  function handleClick() {
+    data.map((obj) => {
+      if (obj.name === name) {
+        if(obj.clicked !== true){
+          obj.clicked = true;
+          if((score.currScore + 1) > score.highscore){
+            setScore({currScore: (score.currScore + 1), highscore: (score.highscore + 1)})
+          } else {
+            setScore({...score, currScore: (score.currScore + 1)});
+          }
+        } else {
+          //reset clicked trackers
+          alert("test");
+          setScore({...score, currScore: 0});
+        }
+      }
+    });
     console.log(data);
-    setData(data => [...data]);
+    setData((data) => [...data]);
   }
-  
-  
+
   return (
-    <div className="card" onClick={handleClick} >
+    <div className="card" onClick={handleClick}>
       <img src={gif} alt={name} />
       <h2>{name}</h2>
     </div>
