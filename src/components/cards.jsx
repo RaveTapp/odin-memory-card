@@ -56,32 +56,47 @@ export function CardContainer() {
   return (
     <>
       <div className="container">{cards}</div>
-      <p>Score: <span className="score">{score.currScore}</span></p>
-      <p>Highscore: <span className="highscore">{score.highscore} </span></p>
+      <p>
+        Score: <span className="score">{score.currScore}</span>
+      </p>
+      <p>
+        Highscore: <span className="highscore">{score.highscore} </span>
+      </p>
     </>
   );
 }
 
 function Card({ gif, name, data, setData, score, setScore }) {
   function handleClick() {
+    let doReset = false;
+
     data.map((obj) => {
       if (obj.name === name) {
-        if(obj.clicked !== true){
+        if (obj.clicked !== true) {
           obj.clicked = true;
-          if((score.currScore + 1) > score.highscore){
-            setScore({currScore: (score.currScore + 1), highscore: (score.highscore + 1)})
+          if (score.currScore + 1 > score.highscore) {
+            setScore({
+              currScore: score.currScore + 1,
+              highscore: score.highscore + 1,
+            });
           } else {
-            setScore({...score, currScore: (score.currScore + 1)});
+            setScore({ ...score, currScore: score.currScore + 1 });
           }
         } else {
-          //reset clicked trackers
-          alert("test");
-          setScore({...score, currScore: 0});
+          doReset = true;
+          alert(name + " was clicked twice, you lose.");
         }
       }
     });
-    console.log(data);
-    setData((data) => [...data]);
+
+    if (checkWin(data) || doReset) {
+      data.map((obj) => {
+        obj.clicked = false;
+      });
+      setScore({ ...score, currScore: 0 });
+    } else {
+      setData((data) => [...data]);
+    }
   }
 
   return (
@@ -90,4 +105,11 @@ function Card({ gif, name, data, setData, score, setScore }) {
       <h2>{name}</h2>
     </div>
   );
+}
+
+function checkWin(data) {
+  if (data.every((obj) => obj.clicked === true)) {
+    alert("Congrats, you win!");
+    return true;
+  }
 }
