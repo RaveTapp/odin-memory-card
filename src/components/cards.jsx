@@ -1,4 +1,5 @@
 import shuffle from "array-permutation/lib/shuffle";
+import {useState} from "react";
 
 import cat from "../gifs/cat.gif";
 import dinosaur from "../gifs/dinosaur.gif";
@@ -16,35 +17,45 @@ import turtle from "../gifs/turtle.gif";
 import "array-permutation";
 
 const animalGifs = [
-  { gif: cat, name: "Cat" },
-  { gif: dinosaur, name: "Dinosaur" },
-  { gif: dog, name: "Dog" },
-  { gif: elephant, name: "Elephant" },
-  { gif: fox, name: "Fox" },
-  { gif: giraffe, name: "Giraffe" },
-  { gif: gorilla, name: "Gorilla" },
-  { gif: horse, name: "Horse" },
-  { gif: kangaroo, name: "Kangaroo" },
-  { gif: ostrich, name: "Ostrich" },
-  { gif: tiger, name: "Tiger" },
-  { gif: turtle, name: "Turtle" },
+  { gif: cat, name: "Cat", clicked: false },
+  { gif: dinosaur, name: "Dinosaur", clicked: false },
+  { gif: dog, name: "Dog", clicked: false },
+  { gif: elephant, name: "Elephant", clicked: false },
+  { gif: fox, name: "Fox", clicked: false },
+  { gif: giraffe, name: "Giraffe", clicked: false },
+  { gif: gorilla, name: "Gorilla", clicked: false },
+  { gif: horse, name: "Horse", clicked: false },
+  { gif: kangaroo, name: "Kangaroo", clicked: false },
+  { gif: ostrich, name: "Ostrich", clicked: false },
+  { gif: tiger, name: "Tiger", clicked: false },
+  { gif: turtle, name: "Turtle", clicked: false },
 ];
 
 export function CardContainer() {
-  shuffle(animalGifs);
+  const [data, setData] = useState(animalGifs);
+  let newData = data;
+  
+  shuffle(newData);
   const cards = [];
-  for (let i = 0; i < animalGifs.length; i++) {
+  for (let i = 0; i < newData.length; i++) {
     cards.push(
-      <Card key={i} gif={animalGifs[i].gif} name={animalGifs[i].name} />
+      <Card key={i} gif={newData[i].gif} name={newData[i].name} data={newData} setData={setData} />
     );
   }
 
   return <div className="container">{cards}</div>;
 }
 
-function Card({gif, name}) {
+function Card({gif, name, data, setData}) {
+  function handleClick(){
+    data.map((obj) => { if (obj.name === name) obj.clicked = true});
+    console.log(data);
+    setData(data => [...data]);
+  }
+  
+  
   return (
-    <div className="card">
+    <div className="card" onClick={handleClick} >
       <img src={gif} alt={name} />
       <h2>{name}</h2>
     </div>
