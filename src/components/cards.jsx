@@ -59,8 +59,8 @@ export function CardContainer() {
       <p>
         Score: <span className="score">{score.currScore}</span>
       </p>
-      <p>
-        Highscore: <span className="highscore">{score.highscore} </span>
+      <p className="highscore">
+        Highscore: <span>{score.highscore} </span>
       </p>
     </>
   );
