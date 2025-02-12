@@ -102,7 +102,7 @@ function Card({ gif, name, data, setData, score, setScore }) {
   return (
     <div className="card" onClick={handleClick}>
       <img src={gif} alt={name} />
-      <h2>{name}</h2>
+      <h2>{score.currScore == 0 ? name : ""}</h2>
     </div>
   );
 }
