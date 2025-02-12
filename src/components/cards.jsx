@@ -89,7 +89,13 @@ function Card({ gif, name, data, setData, score, setScore }) {
       }
     });
 
-    if (checkWin(data) || doReset) {
+    if (checkWin(data)) {
+      data.map((obj) => {
+        obj.clicked = false;
+      });
+      setScore({ currScore: 0, highscore: score.highscore + 1 });
+      alert("Congrats, you win!");
+    } else if (doReset) {
       data.map((obj) => {
         obj.clicked = false;
       });
@@ -109,7 +115,6 @@ function Card({ gif, name, data, setData, score, setScore }) {
 
 function checkWin(data) {
   if (data.every((obj) => obj.clicked === true)) {
-    alert("Congrats, you win!");
     return true;
   }
 }
